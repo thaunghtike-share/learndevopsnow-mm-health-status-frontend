@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ldn-status-ui
+  namespace: learndevopsnow
+  labels:
+    app: ldn-status-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ldn-status-ui
+  template:
+    metadata:
+      labels:
+        app: ldn-status-ui
+    spec:
+      containers:
+        - name: ldn-container
+          image: mahar.azurecr.io/ldn-status-ui:latest
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ldn-status-ui
+  namespace: learndevopsnow
+spec:
+  type: ClusterIP
+  selector:
+    app: ldn-status-ui
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
