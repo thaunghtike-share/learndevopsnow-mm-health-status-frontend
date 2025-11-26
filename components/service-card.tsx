@@ -49,7 +49,7 @@ export default function ServiceCard({ service }: { service: Service }) {
       <div className="flex items-start justify-between mb-6">
         <div className="flex-1">
           <h2 className="text-xl font-bold text-black text-balance">{service.name}</h2>
-          <p className="text-sm text-black mt-1">{service.description}</p>
+          <p className="text-sm text-black mt-1 font-light">{service.description}</p>
         </div>
         <div className={`p-3 rounded-lg ${config.bg}`}>
           <StatusIcon className={`w-6 h-6 ${config.color}`} />
@@ -69,8 +69,8 @@ export default function ServiceCard({ service }: { service: Service }) {
             <Zap className="w-4 h-4 text-blue-600" />
             <span className="text-xs text-black font-medium">Response Time</span>
           </div>
-          <p className="text-2xl font-bold text-black">{service.response_time}</p>
-          <p className="text-xs text-black">milliseconds</p>
+          <p className="text-2xl font-light text-black">{service.response_time}</p>
+          <p className="text-xs text-black font-light">milliseconds</p>
         </div>
 
         {/* Uptime */}
@@ -78,18 +78,18 @@ export default function ServiceCard({ service }: { service: Service }) {
           <div className="flex items-center gap-2 mb-1">
             <span className="text-xs text-black font-medium">Today's Uptime</span>
           </div>
-          <p className="text-2xl font-bold text-black">{service.uptime_today.toFixed(1)}%</p>
-          <p className="text-xs text-black">{uptrendTrend} Trend</p>
+          <p className="text-2xl font-light text-black">{service.uptime_today.toFixed(1)}%</p>
+          <p className="text-xs text-black font-light">{uptrendTrend} Trend</p>
         </div>
       </div>
 
       {/* Last Checked */}
       <div className="border-t border-slate-200 pt-4">
         <div className="flex items-center justify-between">
-          <span className="text-sm text-black">Last checked:</span>
+          <span className="text-sm text-black font-light">Last checked:</span>
           <div className="text-right">
             <p className="font-semibold text-black">{service.last_checked_display}</p>
-            <p className="text-xs text-black">{service.timezone}</p>
+            <p className="text-xs text-black font-light">UTC</p>
           </div>
         </div>
       </div>

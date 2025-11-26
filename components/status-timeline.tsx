@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { Card } from "@/components/ui/card"
 
 interface TimelineEntry {
   time: string
@@ -51,12 +52,12 @@ export default function StatusTimeline({ history }: { history: TimelineEntry[] }
             </div>
           ))
         ) : (
-          <div className="w-full text-center text-slate-500 text-sm">No data available</div>
+          <div className="w-full text-center text-slate-500 text-sm font-light">No data available</div>
         )}
       </div>
 
       {/* Time Labels */}
-      <div className="flex justify-between text-xs text-slate-500">
+      <div className="flex justify-between text-xs text-slate-500 font-light">
         {history.length > 0 ? (
           <>
             <span>{history[0]?.time}</span>
@@ -68,5 +69,3 @@ export default function StatusTimeline({ history }: { history: TimelineEntry[] }
     </Card>
   )
 }
-
-import { Card } from "@/components/ui/card"

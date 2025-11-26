@@ -7,7 +7,6 @@ import {
   Clock,
   Server,
   Wifi,
-  WifiOff,
   Activity,
 } from "lucide-react";
 import Image from "next/image";
@@ -28,7 +27,7 @@ interface Service {
     status: string;
     response_time: number;
   }>;
-    last_7_days_timeline: Array<{
+  last_7_days_timeline: Array<{
     date: string
     day_name: string
     status: 'operational' | 'mixed' | 'outage'
@@ -88,12 +87,6 @@ export default function StatusDashboard() {
     fetchStatus();
   }, []);
 
-  // Auto-refresh every 30 seconds
-  useEffect(() => {
-    const interval = setInterval(fetchStatus, 30000);
-    return () => clearInterval(interval);
-  }, [apiEndpoint]);
-
   const handleManualRefresh = () => {
     fetchStatus();
   };
@@ -128,11 +121,11 @@ export default function StatusDashboard() {
               </div>
             </div>
             <div>
-              <h1 className="text-3xl md:text-4xl font-bold text-black bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+              <h1 className="text-4xl md:text-5xl font-light text-black bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent tracking-tight">
                 Service Status
               </h1>
               <p className="text-black mt-1 text-lg">
-                Learn DevOps Now - Myanmar
+                Learn DevOps Now
               </p>
             </div>
           </div>
@@ -167,13 +160,12 @@ export default function StatusDashboard() {
             <Button
               onClick={handleManualRefresh}
               disabled={loading}
-              className="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white shadow-lg hover:shadow-xl transition-all duration-300"
-              size="lg"
+              className="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 rounded-2xl px-6 py-3 font-semibold"
             >
               <RefreshCw
                 className={`w-4 h-4 ${loading ? "animate-spin" : ""}`}
               />
-              {loading ? "Refreshing..." : "Refresh"}
+              {loading ? "Refreshing..." : "Refresh Status"}
             </Button>
           </div>
         </div>
@@ -188,7 +180,7 @@ export default function StatusDashboard() {
                 <Server className="w-4 h-4" />
                 <span className="text-sm font-medium">Services</span>
               </div>
-              <div className="text-2xl font-bold text-black">
+              <div className="text-3xl font-light text-black">
                 {data.services.length}
               </div>
             </Card>
@@ -198,7 +190,7 @@ export default function StatusDashboard() {
                 <Wifi className="w-4 h-4" />
                 <span className="text-sm font-medium">Operational</span>
               </div>
-              <div className="text-2xl font-bold text-green-600">
+              <div className="text-3xl font-light text-green-600">
                 {
                   data.services.filter(
                     (s) => s.current_status === "operational"
@@ -212,7 +204,7 @@ export default function StatusDashboard() {
                 <Activity className="w-4 h-4" />
                 <span className="text-sm font-medium">Avg Response</span>
               </div>
-              <div className="text-2xl font-bold text-blue-600">
+              <div className="text-3xl font-light text-blue-600">
                 {Math.round(
                   data.services.reduce(
                     (acc, service) => acc + service.response_time,
@@ -233,7 +225,7 @@ export default function StatusDashboard() {
                   <div className="font-semibold text-black">
                     {data.last_updated_display}
                   </div>
-                  <div className="text-xs text-black">{data.timezone}</div>
+                  <div className="text-xs text-black">UTC</div>
                 </div>
               </div>
             </Card>
@@ -268,30 +260,24 @@ export default function StatusDashboard() {
         </div>
       )}
 
-      {/* Loading State */}
+      {/* Simplified Loading State */}
       {loading && !data && (
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-6">
-            {[1, 2].map((i) => (
-              <Card key={i} className="p-6 border-slate-200 shadow-lg">
-                <div className="animate-pulse space-y-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-slate-200 rounded-xl"></div>
-                    <div className="space-y-2 flex-1">
-                      <div className="h-4 bg-slate-200 rounded w-3/4"></div>
-                      <div className="h-3 bg-slate-200 rounded w-1/2"></div>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-3 gap-4">
-                    <div className="h-16 bg-slate-200 rounded-lg"></div>
-                    <div className="h-16 bg-slate-200 rounded-lg"></div>
-                    <div className="h-16 bg-slate-200 rounded-lg"></div>
-                  </div>
-                  <div className="h-24 bg-slate-200 rounded-lg"></div>
-                </div>
-              </Card>
-            ))}
+        <div className="max-w-7xl mx-auto flex flex-col items-center justify-center py-20">
+          <div className="relative mb-6">
+            <div className="w-32 h-32 flex items-center justify-center">
+              <Image
+                src="/logo.png"
+                alt="Learn DevOps Now Logo"
+                width={120}
+                height={120}
+                className="opacity-80 animate-pulse"
+              />
+            </div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-32 h-32 border-4 border-blue-200 border-t-blue-500 rounded-full animate-spin"></div>
+            </div>
           </div>
+          <p className="text-black text-lg font-medium">Loading services status...</p>
         </div>
       )}
 
@@ -315,8 +301,7 @@ export default function StatusDashboard() {
             <div className="inline-flex items-center gap-2 text-black text-sm bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 border border-slate-200">
               <Wifi className="w-4 h-4" />
               <span>
-                Auto-refreshing every 30 seconds • All times in Myanmar Time
-                (MMT)
+                All times in UTC
               </span>
             </div>
           </div>
