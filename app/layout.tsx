@@ -11,9 +11,9 @@ export const metadata: Metadata = {
   title: "Learn DevOps Now - Status Monitor",
   description: "Premium status monitoring dashboard for LearnDevOps services",
   icons: {
-    icon: "/logo.png", // Direct path to your logo
-    shortcut: "/logo.png",
-    apple: "/logo.png",
+    icon: "/new.png", // Direct path to your logo
+    shortcut: "/new.png",
+    apple: "/new.png",
   },
 }
 
